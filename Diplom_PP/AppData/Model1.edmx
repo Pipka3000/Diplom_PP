@@ -1,0 +1,699 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище DiplomModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="ID_Role" Type="int" />
+        </EntityType>
+        <EntityType Name="Выполнение работ">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID_Сотрудник" Type="int" />
+          <Property Name="НаименованиеРаботы" Type="nvarchar" MaxLength="50" />
+          <Property Name="ДатаНачала" Type="date" />
+          <Property Name="ДатаОкончания" Type="date" />
+          <Property Name="КрайнийСрокСдачи" Type="date" />
+          <Property Name="ID_СтатусРаботы" Type="int" />
+        </EntityType>
+        <EntityType Name="Должность">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Единицы">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Кабинеты">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Оборудование">
+          <Key>
+            <PropertyRef Name="Номер" />
+          </Key>
+          <Property Name="Номер" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Наименование" Type="nvarchar" MaxLength="50" />
+          <Property Name="Количество" Type="nvarchar" MaxLength="50" />
+          <Property Name="ДатаВнесения" Type="date" />
+          <Property Name="ДатаСписания" Type="date" />
+          <Property Name="ID_Единица" Type="int" />
+          <Property Name="ID_Расположение" Type="int" />
+          <Property Name="ID_Статус" Type="int" />
+        </EntityType>
+        <EntityType Name="Отдел">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Работник">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ФИО" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Сотрудник">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Фамилия" Type="nvarchar" MaxLength="50" />
+          <Property Name="Имя" Type="nvarchar" MaxLength="50" />
+          <Property Name="Отчество" Type="nvarchar" MaxLength="50" />
+          <Property Name="ID_Отдел" Type="int" />
+          <Property Name="ID_Должность" Type="int" />
+          <Property Name="Телефон" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Статус">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="СтатусРаботы">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="ID_Role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Выполнение работ_Работник">
+          <End Role="Работник" Type="Self.Работник" Multiplicity="0..1" />
+          <End Role="Выполнение работ" Type="Self.Выполнение работ" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Работник">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Выполнение работ">
+              <PropertyRef Name="ID_Сотрудник" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Выполнение работ_Статус работы">
+          <End Role="СтатусРаботы" Type="Self.СтатусРаботы" Multiplicity="0..1" />
+          <End Role="Выполнение работ" Type="Self.Выполнение работ" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="СтатусРаботы">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Выполнение работ">
+              <PropertyRef Name="ID_СтатусРаботы" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Оборудование_Единицы">
+          <End Role="Единицы" Type="Self.Единицы" Multiplicity="0..1" />
+          <End Role="Оборудование" Type="Self.Оборудование" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Единицы">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Оборудование">
+              <PropertyRef Name="ID_Единица" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Оборудование_Кабинеты">
+          <End Role="Кабинеты" Type="Self.Кабинеты" Multiplicity="0..1" />
+          <End Role="Оборудование" Type="Self.Оборудование" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Кабинеты">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Оборудование">
+              <PropertyRef Name="ID_Расположение" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Оборудование_Статус">
+          <End Role="Статус" Type="Self.Статус" Multiplicity="0..1" />
+          <End Role="Оборудование" Type="Self.Оборудование" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Статус">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Оборудование">
+              <PropertyRef Name="ID_Статус" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Сотрудник_Должность">
+          <End Role="Должность" Type="Self.Должность" Multiplicity="0..1" />
+          <End Role="Сотрудник" Type="Self.Сотрудник" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Должность">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Сотрудник">
+              <PropertyRef Name="ID_Должность" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Сотрудник_Отдел">
+          <End Role="Отдел" Type="Self.Отдел" Multiplicity="0..1" />
+          <End Role="Сотрудник" Type="Self.Сотрудник" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Отдел">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Сотрудник">
+              <PropertyRef Name="ID_Отдел" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище DiplomModelContainer">
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Выполнение работ" EntityType="Self.Выполнение работ" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Должность" EntityType="Self.Должность" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Единицы" EntityType="Self.Единицы" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Кабинеты" EntityType="Self.Кабинеты" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Оборудование" EntityType="Self.Оборудование" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Отдел" EntityType="Self.Отдел" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Работник" EntityType="Self.Работник" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Сотрудник" EntityType="Self.Сотрудник" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Статус" EntityType="Self.Статус" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="СтатусРаботы" EntityType="Self.СтатусРаботы" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Выполнение работ_Работник" Association="Self.FK_Выполнение работ_Работник">
+            <End Role="Работник" EntitySet="Работник" />
+            <End Role="Выполнение работ" EntitySet="Выполнение работ" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Выполнение работ_Статус работы" Association="Self.FK_Выполнение работ_Статус работы">
+            <End Role="СтатусРаботы" EntitySet="СтатусРаботы" />
+            <End Role="Выполнение работ" EntitySet="Выполнение работ" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Оборудование_Единицы" Association="Self.FK_Оборудование_Единицы">
+            <End Role="Единицы" EntitySet="Единицы" />
+            <End Role="Оборудование" EntitySet="Оборудование" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Оборудование_Кабинеты" Association="Self.FK_Оборудование_Кабинеты">
+            <End Role="Кабинеты" EntitySet="Кабинеты" />
+            <End Role="Оборудование" EntitySet="Оборудование" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Оборудование_Статус" Association="Self.FK_Оборудование_Статус">
+            <End Role="Статус" EntitySet="Статус" />
+            <End Role="Оборудование" EntitySet="Оборудование" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Сотрудник_Должность" Association="Self.FK_Сотрудник_Должность">
+            <End Role="Должность" EntitySet="Должность" />
+            <End Role="Сотрудник" EntitySet="Сотрудник" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Сотрудник_Отдел" Association="Self.FK_Сотрудник_Отдел">
+            <End Role="Отдел" EntitySet="Отдел" />
+            <End Role="Сотрудник" EntitySet="Сотрудник" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DiplomModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_Role" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ID_Role" Type="Int32" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_User_Role" FromRole="User" ToRole="Role" />
+        </EntityType>
+        <EntityType Name="Выполнение_работ">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID_Сотрудник" Type="Int32" />
+          <Property Name="НаименованиеРаботы" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ДатаНачала" Type="DateTime" Precision="0" />
+          <Property Name="ДатаОкончания" Type="DateTime" Precision="0" />
+          <Property Name="КрайнийСрокСдачи" Type="DateTime" Precision="0" />
+          <Property Name="ID_СтатусРаботы" Type="Int32" />
+          <NavigationProperty Name="Работник" Relationship="Self.FK_Выполнение_работ_Работник" FromRole="Выполнение_работ" ToRole="Работник" />
+          <NavigationProperty Name="СтатусРаботы" Relationship="Self.FK_Выполнение_работ_Статус_работы" FromRole="Выполнение_работ" ToRole="СтатусРаботы" />
+        </EntityType>
+        <EntityType Name="Должность">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Сотрудник" Relationship="Self.FK_Сотрудник_Должность" FromRole="Должность" ToRole="Сотрудник" />
+        </EntityType>
+        <EntityType Name="Единицы">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Оборудование" Relationship="Self.FK_Оборудование_Единицы" FromRole="Единицы" ToRole="Оборудование" />
+        </EntityType>
+        <EntityType Name="Кабинеты">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Оборудование" Relationship="Self.FK_Оборудование_Кабинеты" FromRole="Кабинеты" ToRole="Оборудование" />
+        </EntityType>
+        <EntityType Name="Оборудование">
+          <Key>
+            <PropertyRef Name="Номер" />
+          </Key>
+          <Property Name="Номер" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Наименование" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Количество" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ДатаВнесения" Type="DateTime" Precision="0" />
+          <Property Name="ДатаСписания" Type="DateTime" Precision="0" />
+          <Property Name="ID_Единица" Type="Int32" />
+          <Property Name="ID_Расположение" Type="Int32" />
+          <Property Name="ID_Статус" Type="Int32" />
+          <NavigationProperty Name="Единицы" Relationship="Self.FK_Оборудование_Единицы" FromRole="Оборудование" ToRole="Единицы" />
+          <NavigationProperty Name="Кабинеты" Relationship="Self.FK_Оборудование_Кабинеты" FromRole="Оборудование" ToRole="Кабинеты" />
+          <NavigationProperty Name="Статус" Relationship="Self.FK_Оборудование_Статус" FromRole="Оборудование" ToRole="Статус" />
+        </EntityType>
+        <EntityType Name="Отдел">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Сотрудник" Relationship="Self.FK_Сотрудник_Отдел" FromRole="Отдел" ToRole="Сотрудник" />
+        </EntityType>
+        <EntityType Name="Работник">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ФИО" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Выполнение_работ" Relationship="Self.FK_Выполнение_работ_Работник" FromRole="Работник" ToRole="Выполнение_работ" />
+        </EntityType>
+        <EntityType Name="Сотрудник">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Фамилия" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Имя" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Отчество" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ID_Отдел" Type="Int32" />
+          <Property Name="ID_Должность" Type="Int32" />
+          <Property Name="Телефон" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Должность" Relationship="Self.FK_Сотрудник_Должность" FromRole="Сотрудник" ToRole="Должность" />
+          <NavigationProperty Name="Отдел" Relationship="Self.FK_Сотрудник_Отдел" FromRole="Сотрудник" ToRole="Отдел" />
+        </EntityType>
+        <EntityType Name="Статус">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Оборудование" Relationship="Self.FK_Оборудование_Статус" FromRole="Статус" ToRole="Оборудование" />
+        </EntityType>
+        <EntityType Name="СтатусРаботы">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Выполнение_работ" Relationship="Self.FK_Выполнение_работ_Статус_работы" FromRole="СтатусРаботы" ToRole="Выполнение_работ" />
+        </EntityType>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="ID_Role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Выполнение_работ_Работник">
+          <End Role="Работник" Type="Self.Работник" Multiplicity="0..1" />
+          <End Role="Выполнение_работ" Type="Self.Выполнение_работ" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Работник">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Выполнение_работ">
+              <PropertyRef Name="ID_Сотрудник" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Выполнение_работ_Статус_работы">
+          <End Role="СтатусРаботы" Type="Self.СтатусРаботы" Multiplicity="0..1" />
+          <End Role="Выполнение_работ" Type="Self.Выполнение_работ" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="СтатусРаботы">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Выполнение_работ">
+              <PropertyRef Name="ID_СтатусРаботы" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Сотрудник_Должность">
+          <End Role="Должность" Type="Self.Должность" Multiplicity="0..1" />
+          <End Role="Сотрудник" Type="Self.Сотрудник" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Должность">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Сотрудник">
+              <PropertyRef Name="ID_Должность" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Оборудование_Единицы">
+          <End Role="Единицы" Type="Self.Единицы" Multiplicity="0..1" />
+          <End Role="Оборудование" Type="Self.Оборудование" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Единицы">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Оборудование">
+              <PropertyRef Name="ID_Единица" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Оборудование_Кабинеты">
+          <End Role="Кабинеты" Type="Self.Кабинеты" Multiplicity="0..1" />
+          <End Role="Оборудование" Type="Self.Оборудование" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Кабинеты">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Оборудование">
+              <PropertyRef Name="ID_Расположение" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Оборудование_Статус">
+          <End Role="Статус" Type="Self.Статус" Multiplicity="0..1" />
+          <End Role="Оборудование" Type="Self.Оборудование" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Статус">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Оборудование">
+              <PropertyRef Name="ID_Статус" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Сотрудник_Отдел">
+          <End Role="Отдел" Type="Self.Отдел" Multiplicity="0..1" />
+          <End Role="Сотрудник" Type="Self.Сотрудник" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Отдел">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Сотрудник">
+              <PropertyRef Name="ID_Отдел" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DiplomEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Role" EntityType="Self.Role" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <EntitySet Name="Выполнение_работ" EntityType="Self.Выполнение_работ" />
+          <EntitySet Name="Должность" EntityType="Self.Должность" />
+          <EntitySet Name="Единицы" EntityType="Self.Единицы" />
+          <EntitySet Name="Кабинеты" EntityType="Self.Кабинеты" />
+          <EntitySet Name="Оборудование" EntityType="Self.Оборудование" />
+          <EntitySet Name="Отдел" EntityType="Self.Отдел" />
+          <EntitySet Name="Работник" EntityType="Self.Работник" />
+          <EntitySet Name="Сотрудник" EntityType="Self.Сотрудник" />
+          <EntitySet Name="Статус" EntityType="Self.Статус" />
+          <EntitySet Name="СтатусРаботы" EntityType="Self.СтатусРаботы" />
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Выполнение_работ_Работник" Association="Self.FK_Выполнение_работ_Работник">
+            <End Role="Работник" EntitySet="Работник" />
+            <End Role="Выполнение_работ" EntitySet="Выполнение_работ" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Выполнение_работ_Статус_работы" Association="Self.FK_Выполнение_работ_Статус_работы">
+            <End Role="СтатусРаботы" EntitySet="СтатусРаботы" />
+            <End Role="Выполнение_работ" EntitySet="Выполнение_работ" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Сотрудник_Должность" Association="Self.FK_Сотрудник_Должность">
+            <End Role="Должность" EntitySet="Должность" />
+            <End Role="Сотрудник" EntitySet="Сотрудник" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Оборудование_Единицы" Association="Self.FK_Оборудование_Единицы">
+            <End Role="Единицы" EntitySet="Единицы" />
+            <End Role="Оборудование" EntitySet="Оборудование" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Оборудование_Кабинеты" Association="Self.FK_Оборудование_Кабинеты">
+            <End Role="Кабинеты" EntitySet="Кабинеты" />
+            <End Role="Оборудование" EntitySet="Оборудование" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Оборудование_Статус" Association="Self.FK_Оборудование_Статус">
+            <End Role="Статус" EntitySet="Статус" />
+            <End Role="Оборудование" EntitySet="Оборудование" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Сотрудник_Отдел" Association="Self.FK_Сотрудник_Отдел">
+            <End Role="Отдел" EntitySet="Отдел" />
+            <End Role="Сотрудник" EntitySet="Сотрудник" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище DiplomModelContainer" CdmEntityContainer="DiplomEntities">
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="DiplomModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="DiplomModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="DiplomModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="ID_Role" ColumnName="ID_Role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Выполнение_работ">
+            <EntityTypeMapping TypeName="DiplomModel.Выполнение_работ">
+              <MappingFragment StoreEntitySet="Выполнение работ">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ID_Сотрудник" ColumnName="ID_Сотрудник" />
+                <ScalarProperty Name="НаименованиеРаботы" ColumnName="НаименованиеРаботы" />
+                <ScalarProperty Name="ДатаНачала" ColumnName="ДатаНачала" />
+                <ScalarProperty Name="ДатаОкончания" ColumnName="ДатаОкончания" />
+                <ScalarProperty Name="КрайнийСрокСдачи" ColumnName="КрайнийСрокСдачи" />
+                <ScalarProperty Name="ID_СтатусРаботы" ColumnName="ID_СтатусРаботы" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Должность">
+            <EntityTypeMapping TypeName="DiplomModel.Должность">
+              <MappingFragment StoreEntitySet="Должность">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Единицы">
+            <EntityTypeMapping TypeName="DiplomModel.Единицы">
+              <MappingFragment StoreEntitySet="Единицы">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Кабинеты">
+            <EntityTypeMapping TypeName="DiplomModel.Кабинеты">
+              <MappingFragment StoreEntitySet="Кабинеты">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Оборудование">
+            <EntityTypeMapping TypeName="DiplomModel.Оборудование">
+              <MappingFragment StoreEntitySet="Оборудование">
+                <ScalarProperty Name="Номер" ColumnName="Номер" />
+                <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+                <ScalarProperty Name="Количество" ColumnName="Количество" />
+                <ScalarProperty Name="ДатаВнесения" ColumnName="ДатаВнесения" />
+                <ScalarProperty Name="ДатаСписания" ColumnName="ДатаСписания" />
+                <ScalarProperty Name="ID_Единица" ColumnName="ID_Единица" />
+                <ScalarProperty Name="ID_Расположение" ColumnName="ID_Расположение" />
+                <ScalarProperty Name="ID_Статус" ColumnName="ID_Статус" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Отдел">
+            <EntityTypeMapping TypeName="DiplomModel.Отдел">
+              <MappingFragment StoreEntitySet="Отдел">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Работник">
+            <EntityTypeMapping TypeName="DiplomModel.Работник">
+              <MappingFragment StoreEntitySet="Работник">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ФИО" ColumnName="ФИО" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Сотрудник">
+            <EntityTypeMapping TypeName="DiplomModel.Сотрудник">
+              <MappingFragment StoreEntitySet="Сотрудник">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Фамилия" ColumnName="Фамилия" />
+                <ScalarProperty Name="Имя" ColumnName="Имя" />
+                <ScalarProperty Name="Отчество" ColumnName="Отчество" />
+                <ScalarProperty Name="ID_Отдел" ColumnName="ID_Отдел" />
+                <ScalarProperty Name="ID_Должность" ColumnName="ID_Должность" />
+                <ScalarProperty Name="Телефон" ColumnName="Телефон" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Статус">
+            <EntityTypeMapping TypeName="DiplomModel.Статус">
+              <MappingFragment StoreEntitySet="Статус">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="СтатусРаботы">
+            <EntityTypeMapping TypeName="DiplomModel.СтатусРаботы">
+              <MappingFragment StoreEntitySet="СтатусРаботы">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

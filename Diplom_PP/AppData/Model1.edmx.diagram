@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1aee4d36e9b64082945acfd5b9620623" Name="Diagram1">
+        <EntityTypeShape EntityType="DiplomModel.Role" Width="1.5" PointX="0.75" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiplomModel.sysdiagrams" Width="1.5" PointX="2.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiplomModel.User" Width="1.5" PointX="3" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiplomModel.Выполнение_работ" Width="1.5" PointX="10" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiplomModel.Должность" Width="1.5" PointX="5.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiplomModel.Единицы" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiplomModel.Кабинеты" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiplomModel.Оборудование" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiplomModel.Отдел" Width="1.5" PointX="5.75" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiplomModel.Работник" Width="1.5" PointX="7.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiplomModel.Сотрудник" Width="1.5" PointX="8" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiplomModel.Статус" Width="1.5" PointX="0.75" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiplomModel.СтатусРаботы" Width="1.5" PointX="7.75" PointY="8.5" IsExpanded="true" />
+        <AssociationConnector Association="DiplomModel.FK_User_Role" ManuallyRouted="false" />
+        <AssociationConnector Association="DiplomModel.FK_Выполнение_работ_Работник" ManuallyRouted="false" />
+        <AssociationConnector Association="DiplomModel.FK_Выполнение_работ_Статус_работы" ManuallyRouted="false" />
+        <AssociationConnector Association="DiplomModel.FK_Сотрудник_Должность" ManuallyRouted="false" />
+        <AssociationConnector Association="DiplomModel.FK_Оборудование_Единицы" ManuallyRouted="false" />
+        <AssociationConnector Association="DiplomModel.FK_Оборудование_Кабинеты" ManuallyRouted="false" />
+        <AssociationConnector Association="DiplomModel.FK_Оборудование_Статус" ManuallyRouted="false" />
+        <AssociationConnector Association="DiplomModel.FK_Сотрудник_Отдел" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
